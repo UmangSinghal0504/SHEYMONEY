@@ -4,7 +4,7 @@ import axios from "axios";
 import { message } from "antd";
 import Spinner from "./Spinner";
 
-// ✅ Use your API from .env
+
 const API = process.env.REACT_APP_API_URL;
 
 function AddEditTransaction({
@@ -51,7 +51,7 @@ function AddEditTransaction({
   return (
     <Modal
       title={selectedItemForEdit ? "Edit Transaction" : "Add Transaction"}
-      open={showAddEditTransactionModal} // ✅ was 'visible', now 'open' (for newer AntD)
+      open={showAddEditTransactionModal} 
       onCancel={() => setShowAddEditTransactionModal(false)}
       footer={false}
     >

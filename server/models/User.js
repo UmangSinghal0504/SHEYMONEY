@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
         minlength: [6, 'Password must be at least 6 characters']
     }
 }, {
-    timestamps: true // Adds createdAt and updatedAt fields
+    timestamps: true 
 });
 
-// Explicitly set the collection name
-const User = mongoose.model('User', userSchema, 'users'); // Third param is collection name
+
+const User = mongoose.model('User', userSchema, 'users'); 
 
 export default User;

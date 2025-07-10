@@ -17,7 +17,7 @@ import Analatics from "../components/Analatics";
 
 const { RangePicker } = DatePicker;
 
-// ✅ 👇 Add this line at the top after imports
+
 const API = process.env.REACT_APP_API_URL;
 
 const Home = () => {
@@ -58,7 +58,7 @@ const Home = () => {
       setLoading(true);
       await axios.post(`${API}/transactions/delete-transaction`, {
         transactionId: record._id,
-      }); // ✅ changed from relative URL
+      }); 
       message.success("Transaction Deleted Successfully");
       getTransactions();
       setLoading(false);

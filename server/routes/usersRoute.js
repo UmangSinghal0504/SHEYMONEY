@@ -14,7 +14,7 @@ router.post('/login', async (req,res) => {
             res.json({
                 success: true,
                 message: "Login successful",
-                data: user // Send the user data
+                data: user 
             });
         } else {
             res.status(401).json({
@@ -34,7 +34,7 @@ router.post('/register', async (req, res) => {
     console.log('Registration attempt with data:', req.body);
     
     try {
-        // Check if user exists
+        
         const existingUser = await usermodel.findOne({ email: req.body.email });
         if (existingUser) {
             console.log('Registration failed - email exists:', req.body.email);
@@ -65,7 +65,7 @@ router.post('/register', async (req, res) => {
         res.status(500).json({
             success: false,
             message: error.message,
-            errorDetails: error.errors // Shows validation errors if any
+            errorDetails: error.errors 
         });
     }
 });

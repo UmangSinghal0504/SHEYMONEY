@@ -6,7 +6,7 @@ import "../resources/authentication.css";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 
-const API = process.env.REACT_APP_API_URL; // ✅ API from .env
+const API = process.env.REACT_APP_API_URL; 
 
 function Login() {
   const [loading, setLoading] = useState(false);

@@ -29,7 +29,7 @@ const transactionSchema = new mongoose.Schema({
   },
 });
 
-// Explicitly set the collection name
-const transactionModel = mongoose.model("Transactions", transactionSchema); // Third param is collection name
+
+const transactionModel = mongoose.model("Transactions", transactionSchema); 
 
 export default transactionModel;

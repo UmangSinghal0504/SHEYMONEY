@@ -6,7 +6,7 @@ import "../resources/authentication.css";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 
-const API = process.env.REACT_APP_API_URL; // ✅ Add this
+const API = process.env.REACT_APP_API_URL; 
 
 function Register() {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ function Register() {
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      await axios.post(`${API}/users/register`, values); // ✅ Updated path
+      await axios.post(`${API}/users/register`, values); 
       message.success("Registration Successful");
       setLoading(false);
     } catch (error) {
