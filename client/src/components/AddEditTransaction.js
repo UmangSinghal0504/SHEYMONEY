@@ -4,6 +4,7 @@ import axios from "axios";
 import { message } from "antd";
 import Spinner from "./Spinner";
 
+// ✅ Use your API from .env
 const API = process.env.REACT_APP_API_URL;
 
 function AddEditTransaction({
@@ -11,32 +12,33 @@ function AddEditTransaction({
   showAddEditTransactionModal,
   selectedItemForEdit,
   setSelectedItemForEdit,
-  getTransactions, 
+  getTransactions,
 }) {
-  
   const [loading, setLoading] = useState(false);
+
   const onFinish = async (values) => {
     try {
-          const user = JSON.parse(localStorage.getItem("sheymoney-udemy-user"));
-         
+      const user = JSON.parse(localStorage.getItem("sheymoney-udemy-user"));
       setLoading(true);
+
       if (selectedItemForEdit) {
-         await axios.post("/api/transactions/edit-transaction", {
-          payload : {
-             ...values,
-      userid: user?.data?._id,
+        await axios.post(`${API}/transactions/edit-transaction`, {
+          payload: {
+            ...values,
+            userid: user?.data?._id,
           },
-    transactionId: selectedItemForEdit._id,
-    });
+          transactionId: selectedItemForEdit._id,
+        });
+        message.success("Transaction Updated Successfully");
+      } else {
+        await axios.post(`${API}/transactions/add-transaction`, {
+          ...values,
+          userid: user?.data?._id,
+        });
+        message.success("Transaction Added Successfully");
+      }
+
       getTransactions();
-      message.success("Transaction Updated Successfully");
-  } else {
-     await axios.post("/api/transactions/add-transaction", {
-       ...values,
-      userid: user?.data?._id});
-      getTransactions();
-      message.success("Transaction Added Successfully");
-     }
       setShowAddEditTransactionModal(false);
       setSelectedItemForEdit(null);
       setLoading(false);
@@ -48,13 +50,18 @@ function AddEditTransaction({
 
   return (
     <Modal
-      title={selectedItemForEdit ? 'Edit Transaction' : 'Add Transaction'}
-      visible={showAddEditTransactionModal}
+      title={selectedItemForEdit ? "Edit Transaction" : "Add Transaction"}
+      open={showAddEditTransactionModal} // ✅ was 'visible', now 'open' (for newer AntD)
       onCancel={() => setShowAddEditTransactionModal(false)}
       footer={false}
     >
       {loading && <Spinner />}
-      <Form layout="vertical" className="transaction-form" onFinish={onFinish} initialValues={selectedItemForEdit}>
+      <Form
+        layout="vertical"
+        className="transaction-form"
+        onFinish={onFinish}
+        initialValues={selectedItemForEdit}
+      >
         <Form.Item label="Amount" name="amount">
           <Input type="text" />
         </Form.Item>
@@ -79,12 +86,15 @@ function AddEditTransaction({
             <Select.Option value="tax">Tax</Select.Option>
           </Select>
         </Form.Item>
+
         <Form.Item label="Date" name="date">
           <Input type="date" />
         </Form.Item>
+
         <Form.Item label="Reference" name="reference">
           <Input type="text" />
         </Form.Item>
+
         <Form.Item label="Description" name="description">
           <Input type="text" />
         </Form.Item>
