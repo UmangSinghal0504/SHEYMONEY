@@ -4,6 +4,8 @@ import axios from "axios";
 import { message } from "antd";
 import Spinner from "./Spinner";
 
+const API = process.env.REACT_APP_API_URL;
+
 function AddEditTransaction({
   setShowAddEditTransactionModal,
   showAddEditTransactionModal,
