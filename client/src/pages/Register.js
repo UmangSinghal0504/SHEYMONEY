@@ -6,14 +6,17 @@ import "../resources/authentication.css";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 
+const API = process.env.REACT_APP_API_URL; // ✅ Add this
+
 function Register() {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(true);
+  const navigate = useNavigate();
+
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      await axios.post("/api/users/register", values);
-      message.success("Registration Successfull");
+      await axios.post(`${API}/users/register`, values); // ✅ Updated path
+      message.success("Registration Successful");
       setLoading(false);
     } catch (error) {
       message.error("Something went wrong");
@@ -25,7 +28,7 @@ function Register() {
     if (localStorage.getItem("sheymoney-udemy-user")) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="register">
@@ -45,7 +48,7 @@ function Register() {
         <div className="col-md-4">
           <Form layout="vertical" onFinish={onFinish}>
             <h1>REGISTER</h1>
-           
+
             <Form.Item label="Name" name="name">
               <Input />
             </Form.Item>
@@ -57,7 +60,7 @@ function Register() {
             </Form.Item>
 
             <div className="d-flex justify-content-between align-items-center">
-              <Link to="/login">Already Registered , Click Here To Login</Link>
+              <Link to="/login">Already Registered? Click Here To Login</Link>
               <button className="secondary" type="submit">
                 REGISTER
               </button>

@@ -6,14 +6,16 @@ import "../resources/authentication.css";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 
+const API = process.env.REACT_APP_API_URL; // ✅ API from .env
+
 function Login() {
   const [loading, setLoading] = useState(false);
-
   const navigate = useNavigate();
+
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/login", values);
+      const response = await axios.post(`${API}/users/login`, values); // ✅ use env-based URL
       localStorage.setItem(
         "sheymoney-udemy-user",
         JSON.stringify({ ...response.data, password: "" })
@@ -31,7 +33,7 @@ function Login() {
     if (localStorage.getItem("sheymoney-udemy-user")) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="register">
@@ -40,7 +42,6 @@ function Login() {
         <div className="col-md-4">
           <Form layout="vertical" onFinish={onFinish}>
             <h1>Login</h1>
-    
 
             <Form.Item label="Email" name="email">
               <Input />
@@ -51,7 +52,7 @@ function Login() {
 
             <div className="d-flex justify-content-between align-items-center">
               <Link to="/register">
-                Not Registered Yet , Click Here To Register
+                Not Registered Yet, Click Here To Register
               </Link>
               <button className="secondary" type="submit">
                 LOGIN
